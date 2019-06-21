@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import Nav from './components/Nav';
 import LoginForm from './components/LoginForm';
 import SignupForm from './components/SignupForm';
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import ResetPassword from './components/ResetPassword'
+import ConfirmPasswordReset from './components/ConfirmPasswordReset'
 import './App.css';
 
 class App extends Component {
@@ -102,11 +105,28 @@ class App extends Component {
           handle_logout={this.handle_logout}
         />
         {form}
-        <h3>
-          {this.state.logged_in
-            ? `Hello, ${this.state.username}. ${this.state.first_name} ${this.state.last_name}`
-            : 'Please Log In'}
-        </h3>
+        <BrowserRouter>
+          <Switch>
+            <Route
+              exact path="/"
+              render={() =>
+                <h3>
+                  {this.state.logged_in
+                    ? `Hello, ${this.state.username}. ${this.state.first_name} ${this.state.last_name}`
+                    : 'Please Log In'}
+                </h3>
+              }
+            />
+            <Route
+              exact path="/reset_password/"
+              component={ResetPassword}
+            />
+            <Route
+              exact path="/reset_password/confirm/:token"
+              component={ConfirmPasswordReset}
+            />
+          </Switch>
+        </BrowserRouter>
       </div>
     );
   }
